@@ -15,6 +15,6 @@ public class JTopic extends JContent
 
 	public String toString()
 	{
-
+		return "Topic: " + title + "\n" + description;
 	}
 }

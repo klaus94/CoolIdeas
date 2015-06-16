@@ -2,13 +2,12 @@ public class JValuation extends JContent
 {
 	public JValuation(String title, String description)
 	{
-		this.title = title;
-		this.description = description;
+		super(title, description);
 	}
 
 	public String toString()
 	{
-
+		return "Valuation: " + title + "\n" + description;
 	}
 
 }

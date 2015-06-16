@@ -10,7 +10,7 @@ public class JIdea extends JContent
 	{
 		super(title, description);
 		attachments = new ArrayList<JAttachment>();
-		state = new Draft();
+		state = state.new Draft();
 	}
 
 	public void discuss(String text)
@@ -35,17 +35,17 @@ public class JIdea extends JContent
 
 	public void decline()
 	{
-		state.declined();
+		state.decline();
 	}
 
 	public boolean isDeclined()
 	{
-		return (state instanceof DeclinedIdea);
+		return (state instanceof JState.DeclinedIdea);
 	}
 
 	public boolean isReleased()
 	{
-		return (state instanceof ReleasedIdea);
+		return (state instanceof JState.ReleasedIdea);
 	}
 
 	public String getCurrentDiscussion()

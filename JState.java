@@ -38,4 +38,28 @@ public abstract class JState
 
 	}
 
+	private class Draft extends JState 
+	{
+		
+	}
+
+	private class OpenDraft extends JState 
+	{
+		
+	}
+
+	private class ApprovedIdea extends JState 
+	{
+		
+	}
+
+	private class ReleasedIdea extends JState 
+	{
+		
+	}
+
+	private class DeclinedIdea extends JState
+	{
+		
+	}
 }

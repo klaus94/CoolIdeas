@@ -3,8 +3,13 @@ import java.util.*;
 public class JIdea extends JContent
 {
 
-	private List<JAttachment> attachments = new ArrayList<JAttachment>();		// perhabs another implementation is better
+	private List<JAttachment> attachments;
 	private JState state;
+
+	public JIdea () 
+	{
+		attachments = new ArrayList<JAttachment>();
+	}
 
 	public void discuss(String text)
 	{

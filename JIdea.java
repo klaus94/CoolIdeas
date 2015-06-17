@@ -10,7 +10,7 @@ public class JIdea extends JContent
 	{
 		super(title, description);
 		attachments = new ArrayList<JAttachment>();
-		state = state.new Draft();
+		state = new Draft();
 	}
 
 	public void discuss(String text)
@@ -40,12 +40,12 @@ public class JIdea extends JContent
 
 	public boolean isDeclined()
 	{
-		return (state instanceof JState.DeclinedIdea);
+		return (state instanceof DeclinedIdea);
 	}
 
 	public boolean isReleased()
 	{
-		return (state instanceof JState.ReleasedIdea);
+		return (state instanceof ReleasedIdea);
 	}
 
 	public String getCurrentDiscussion()
@@ -78,5 +78,107 @@ public class JIdea extends JContent
 		return ("Idea: " + title + "\n"
 			+ description);
 	}
+
+
+	private abstract class JState
+	{
+		protected String currentDiscussion;
+		protected JValuation valuation;
+
+		public void discuss(String text)
+		{
+			throw new IllegalStateException();
+		}
+
+		public void evaluate(JValuation valuation)
+		{
+			throw new IllegalStateException();
+		}
+
+		public void hold()
+		{
+			throw new IllegalStateException();
+		}
+
+		public void release()
+		{
+			throw new IllegalStateException();
+		}
+
+		public void decline()
+		{
+			throw new IllegalStateException();
+		}
+
+		public String getCurrentDiscussion()
+		{
+			return currentDiscussion;
+		}
+
+		public JValuation getValuation()
+		{
+			return valuation;
+		}
+
+	}
+
+	public class Draft extends JState 
+	{
+		public void hold()
+		{
+			this = new OpenDraft();
+		}
+
+		public void decline()
+		{
+			this.new DeclinedIdea();
+		}
+	}
+
+	public  class OpenDraft extends JState 
+	{
+		public void hold()
+		{
+			this.new ApprovedIdea();
+		}
+
+		public void evaluate(JValuation valuation)
+		{
+			this.valuation = valuation;
+		}
+
+		public void discuss(String text)
+		{
+			if (currentDiscussion.equals("")) {
+				currentDiscussion = text;
+			} else {
+				currentDiscussion = (currentDiscussion + "\n" + text);
+			}
+		}
+
+		public void decline()
+		{
+			this.new DeclinedIdea();
+		}
+	}
+
+	public class ApprovedIdea extends JState 
+	{
+		public void release()
+		{
+			this.new ReleasedIdea();
+		}
+	}
+
+	public class ReleasedIdea extends JState 
+	{
+		
+	}
+
+	public class DeclinedIdea extends JState
+	{
+	
+	}
+
 
 }

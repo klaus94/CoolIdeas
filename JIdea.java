@@ -80,7 +80,7 @@ public class JIdea extends JContent
 	}
 
 
-	private abstract class JState
+	public abstract class JState
 	{
 		protected String currentDiscussion;
 		protected JValuation valuation;
@@ -126,12 +126,12 @@ public class JIdea extends JContent
 	{
 		public void hold()
 		{
-			this = new OpenDraft();
+			state = new OpenDraft();
 		}
 
 		public void decline()
 		{
-			this.new DeclinedIdea();
+			state = new DeclinedIdea();
 		}
 	}
 
@@ -139,7 +139,7 @@ public class JIdea extends JContent
 	{
 		public void hold()
 		{
-			this.new ApprovedIdea();
+			state = new ApprovedIdea();
 		}
 
 		public void evaluate(JValuation valuation)
@@ -158,7 +158,7 @@ public class JIdea extends JContent
 
 		public void decline()
 		{
-			this.new DeclinedIdea();
+			state = new DeclinedIdea();
 		}
 	}
 
@@ -166,7 +166,7 @@ public class JIdea extends JContent
 	{
 		public void release()
 		{
-			this.new ReleasedIdea();
+			state = new ReleasedIdea();
 		}
 	}
 

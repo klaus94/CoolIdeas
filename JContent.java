@@ -1,4 +1,6 @@
-public abstract class JContent
+import java.util.Observable;
+
+public abstract class JContent extends Observable
 {
 
 	protected String title;
@@ -6,6 +8,16 @@ public abstract class JContent
 
 	public JContent(String title, String description)
 	{
+		if (description == null || title == null)
+		{
+			throw new NullPointerException();
+		}
+
+		if (description.equals("") || title.equals(""))
+		{
+			throw new IllegalArgumentException();
+		}
+
 		this.title = title;
 		this.description = description;
 	}
@@ -17,6 +29,21 @@ public abstract class JContent
 
 	public void setDescription(String description)
 	{
+		if (description == null)
+		{
+			throw new NullPointerException();
+		}
+
+		if (description.equals(""))
+		{
+			throw new IllegalArgumentException();
+		}
+
+		if (description.equals(""))
+		{
+			throw new IllegalArgumentException();
+		}
+
 		this.description = description;
 	}
 
@@ -25,8 +52,18 @@ public abstract class JContent
 		return title;
 	}
 
-	public void SetTitle(String title)
+	public void setTitle(String title)
 	{
+		if (title == null)
+		{
+			throw new NullPointerException();
+		}
+
+		if (title.equals(""))
+		{
+			throw new IllegalArgumentException();
+		}
+
 		this.title = title;
 	}
 

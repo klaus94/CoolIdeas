@@ -17,4 +17,40 @@ public class JTopic extends JContent
 	{
 		return "Topic: " + title + "\n" + description;
 	}
+
+	// overwrite inherited methods:
+	public void setDescription(String description)
+	{
+		if (description == null)
+		{
+			throw new NullPointerException();
+		}
+
+		if (description.equals(""))
+		{
+			throw new IllegalArgumentException();
+		}
+
+		this.description = description;
+		setChanged();
+		notifyObservers(description);
+	}
+
+	public void setTitle(String title)
+	{
+		if (title == null)
+		{
+			throw new NullPointerException();
+		}
+
+		if (description.equals(""))
+		{
+			throw new IllegalArgumentException();
+		}
+
+		this.title = title;
+		setChanged();
+		notifyObservers(title);
+	}
+
 }

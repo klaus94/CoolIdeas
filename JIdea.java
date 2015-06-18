@@ -6,12 +6,16 @@ public class JIdea extends JContent
 	private List<JAttachment> attachments;
 	private JState state;
 
+	// CONSTRUCTOR:
+
 	public JIdea (String title, String description) 
 	{
 		super(title, description);
 		attachments = new ArrayList<JAttachment>();
 		state = new Draft();
 	}
+
+	// OWN METHODS:
 
 	public void discuss(String text)
 	{
@@ -60,6 +64,11 @@ public class JIdea extends JContent
 
 	public void addAttachment(JAttachment attachment)
 	{
+		if (attachment == null)
+		{
+			throw new NullPointerException();
+		}
+
 		attachments.add(attachment);
 	}
 
@@ -70,6 +79,11 @@ public class JIdea extends JContent
 
 	public boolean removeAttachment(JAttachment attachment)
 	{
+		if (attachment == null)
+		{
+			throw new NullPointerException();
+		}
+
 		return attachments.remove(attachment);
 	}
 
@@ -79,6 +93,8 @@ public class JIdea extends JContent
 			+ description);
 	}
 
+
+	// INNER CLASSES:
 
 	public abstract class JState
 	{

@@ -98,7 +98,7 @@ public class JIdea extends JContent
 
 	public abstract class JState
 	{
-		protected String currentDiscussion;
+		protected String currentDiscussion = "";
 		protected JValuation valuation;
 
 		public void discuss(String text)
@@ -165,11 +165,12 @@ public class JIdea extends JContent
 
 		public void discuss(String text)
 		{
-			if (currentDiscussion.equals("")) {
+			/*if (currentDiscussion.equals("")) {
 				currentDiscussion = text;
 			} else {
 				currentDiscussion = (currentDiscussion + "\n" + text);
-			}
+			}*/
+			currentDiscussion = currentDiscussion + text + "\n";
 		}
 
 		public void decline()

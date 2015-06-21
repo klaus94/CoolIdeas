@@ -35,37 +35,26 @@ public class JIdeaPool
 			throw new NullPointerException();
 		}
 
-		/*for (JTopic t: pool.keySet())
+		// if idea already in pool, do not add it
+		for (JTopic t: pool.keySet())
 		{
 			for (JIdea i: pool.get(t))
 			{
-				if (i.getTitle().equals( idea.getTitle() ))
+				if ( (i != idea) && (i.getTitle().equals( idea.getTitle() )))
 				{
-					return;				// if title of idea already exists, do not add it to the IdeaPool
-				}
-			}
-		}*/
-
-
-		// if idea already in topic, do not add it
-		if (pool.containsKey(topic))
-		{
-			for (JIdea i: pool.get(topic))
-			{
-				if (i.getTitle().equals( idea.getTitle() ))
-				{
-					return;
+					return;							// if idea is different to every idea in pool, but title already used --> do not add it
 				}
 			}
 		}
-		else
+		
+		// add a new topic, if not already in pool
+		if ( !pool.keySet().contains(topic) )
 		{
-			// add topic, if not already in pool
 			pool.put(topic, new HashSet<JIdea>());
 		}
 
 
-		// even, if idea already is in an other topic, add it to this one
+		// add idea to the pool
 		pool.get(topic).add(idea);
 
 	}
@@ -94,19 +83,23 @@ public class JIdeaPool
 	public boolean remove(JIdea idea)
 	{
 		boolean removeSuccess = false;
+		Object[] removeArray;
 
 		if (idea == null)
 		{
 			throw new NullPointerException();
 		}
 
-		for (JTopic t: pool.keySet())			// remove idea in all topics
+		for (JTopic t: pool.keySet())
 		{
-			for (JIdea i: pool.get(t))
+			// iterate through array --> so that the iterator is not in confilict to remove()
+			removeArray = pool.get(t).toArray(new JIdea[0]);
+
+			for (int i = 0; i < removeArray.length; i++)
 			{
-				if (i == idea)					// == or equals() ???
+				if (removeArray[i] == idea)
 				{
-					pool.get(t).remove(i);		// remove idea from the set
+					pool.get(t).remove(removeArray[i]);
 					removeSuccess = true;
 				}
 			}
@@ -152,12 +145,6 @@ public class JIdeaPool
 
 	public int numberOfIdeas()
 	{
-		/*int ideasCount = 0;
-
-		for (JTopic t: pool.keySet())
-		{
-			ideasCount += pool.get(t).size();
-		}*/
 
 		Set<String> individualIdeas = new HashSet<String>();
 		for (JTopic t: pool.keySet())
@@ -173,29 +160,49 @@ public class JIdeaPool
 
 	public void removeDeclined()
 	{
+		Set<JIdea> removeIdeas = new HashSet<JIdea>();
+
+		// at first collect all ideas, that must be removed
 		for (JTopic t: pool.keySet())
 		{
-			for (JIdea i: pool.get(t))
+			for (JIdea idea: pool.get(t)) 
 			{
-				if (i.isDeclined())
+				if (idea.isDeclined())
 				{
-					pool.get(t).remove(i);
+					removeIdeas.add(idea);
 				}
 			}
 		}
+
+		// then delete one after the other
+		for (JIdea rmIdea: removeIdeas)
+		{
+			rmIdea.getTitle();
+			remove(rmIdea);
+		}
+
 	}
 
 	public void removeReleased()
 	{
+		Set<JIdea> removeIdeas = new HashSet<JIdea>();
+
+		// at first collect all ideas, that must be removed
 		for (JTopic t: pool.keySet())
 		{
-			for (JIdea i: pool.get(t))
+			for (JIdea idea: pool.get(t)) 
 			{
-				if (i.isReleased())
+				if (idea.isReleased())
 				{
-					pool.get(t).remove(i);
+					removeIdeas.add(idea);
 				}
 			}
+		}
+
+		// then delete one after the other
+		for (JIdea rmIdea: removeIdeas)
+		{
+			remove(rmIdea);
 		}
 	}
 

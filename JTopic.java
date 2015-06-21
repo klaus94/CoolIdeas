@@ -43,7 +43,7 @@ public class JTopic extends JContent
 			throw new NullPointerException();
 		}
 
-		if (description.equals(""))
+		if (title.equals(""))
 		{
 			throw new IllegalArgumentException();
 		}
